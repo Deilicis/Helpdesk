@@ -5,7 +5,7 @@
 <x-guest-layout>
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form class="LOG" method="POST" action="{{ route('login') }}">
+    <form class="form" method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
