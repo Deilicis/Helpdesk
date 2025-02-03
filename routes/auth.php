@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/problems/{id}', [ProblemController::class, 'destroy'])->name('problems.destroy');
 
+    Route::get('/problems/{id}', [ProblemController::class, 'show'])->name('problems.show');
+
     Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');

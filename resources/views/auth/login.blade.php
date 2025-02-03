@@ -2,9 +2,9 @@
 @section('title', 'Login')
 @section('content')
 <div class="content">
-<x-guest-layout>
+    <h1>Ielogoties</h1>
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
+    <div class="formHolder">
     <form class="form" method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -48,7 +48,8 @@
             </button>
         </div>
     </form>
+</div>
     @yield('footer')
-</x-guest-layout>
+
 </div>
 @endsection

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Flasher\Prime\FlasherInterface;
 use Illuminate\View\View;
 use App\Models\Problem;
-
+use Illuminate\Support\Facades\Cache;
 
 
 class ProblemController extends Controller
@@ -21,7 +21,6 @@ class ProblemController extends Controller
     {
         return view('form');
     }
-    
     public function store(Request $request, FlasherInterface $flasher)
     {
         $request->validate([
@@ -31,6 +30,7 @@ class ProblemController extends Controller
             'laiks' => ['nullable', 'string'],
             'epasts' => ['required', 'email'],
         ]);
+    
         $problem = new Problem();
         $problem->nozare = $request->input('nozare');
         $problem->virsraksts = $request->input('virsraksts');
@@ -39,6 +39,8 @@ class ProblemController extends Controller
         $problem->epasts = $request->input('epasts');
         $problem->save();
     
+        Cache::forget('problem_' . $problem->id);
+    
         return redirect()->back()->with('success', 'Problēma nosūtīta!');
     }
     public function index(): View
@@ -46,11 +48,24 @@ class ProblemController extends Controller
         $problems = Problem::paginate(15);
         return view('dash.dashboard', compact('problems'));
     }
+   
+
+    public function show($id)
+    {
+        $cacheKey = 'problem_' . $id;
+        $problem = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($id) {
+            return Problem::findOrFail($id);
+        });
+    
+        return response()->json($problem);
+    }
     public function destroy($id)
     {
         $problem = Problem::findOrFail($id);
         $problem->delete();
 
+        Cache::forget('problem_' . $id);
+    
         return redirect()->route('dashboard')->with('success', 'Problēma izdzēsta!');
     }
 }

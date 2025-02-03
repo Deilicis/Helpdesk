@@ -2,6 +2,7 @@
 @section('title', 'Dashboard')
 @section('content')
 <div class="content">
+    <x-auth-session-status class="mb-4" :status="session('status')" />
     <main>
         <h1>Problēmas</h1>
         <section class="problemas">
@@ -17,8 +18,7 @@
                         {{-- <th>Izveidošanas laiks</th> --}}
                     </tr>
                     @foreach ($problems as $problem)
-                        <a class="problem">
-                        <tr class="problemTable-row">
+                    <tr class="problemTable-row" data-id="{{ $problem->id }}">
                             <td>
                                 <p>{{ $problem->id }}</p>
                             </td>
@@ -35,26 +35,22 @@
                                 @if ($problem->laiks == null)
                                     <p>-</p>
                                 @else
-                                <p>{{ $problem->laiks }}</p>
+                                    <p>{{ $problem->laiks }}</p>
                                 @endif
                             </td>
                             <td>
-                                @if ($problem->epasts == null)
-                                    <p>-</p>
-                                @else
                                 <p>{{ $problem->epasts }}</p>
-                                @endif
                             </td>
-                            
                         </tr>
-                    </a>
                     @endforeach
                 </table>
             </div>
             <div class="problemHolder" id="problemDetails">
                 <div>
                     <h1>Problēmas detaļas</h1>
-                    <p id="details">Izvēlieties problēmu, lai redzētu tās detaļas</p>
+                    <div id="detailsContent">
+                        <p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>
+                    </div>
                 </div>
             </div>
         </section>
