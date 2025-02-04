@@ -5,30 +5,29 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteButtons = document.querySelectorAll('.btn-danger');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault();
-            const action = this.getAttribute('data-action');
-            showConfirmPopup(action);
-        });
-    });
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     const deleteButtons = document.querySelectorAll('.btn-danger');
+//     deleteButtons.forEach(button => {
+//         button.addEventListener('click', function (event) {
+//             event.preventDefault();
+//             const action = this.getAttribute('data-action');
+//             showConfirmPopup(action);
+//         });
+//     });
+// });
 
-window.showConfirmPopup = function (action) {
-    document.getElementById('deleteUserForm').action = action;
-    document.getElementById('confirmDeletePopup').style.display = 'flex';
-}
+// window.showConfirmPopup = function (action) {
+//     document.getElementById('deleteUserForm').action = action;
+//     document.getElementById('confirmDeletePopup').style.display = 'flex';
+// }
 
-window.hideConfirmPopup = function () {
-    document.getElementById('confirmDeletePopup').style.display = 'none';
-}
+// window.hideConfirmPopup = function () {
+//     document.getElementById('confirmDeletePopup').style.display = 'none';
+// }
 
 document.addEventListener('DOMContentLoaded', function () {
     const problemRows = document.querySelectorAll('.problemTable-row');
     const detailsContent = document.getElementById('detailsContent');
-    const defaultMessage = document.getElementById('defaultMessage');
     const deleteButton = document.getElementById('deleteButton');
 
     let selectedProblemId = null;
@@ -78,53 +77,61 @@ document.addEventListener('DOMContentLoaded', function () {
         const nozareSelect = document.getElementById('nozare');
         const citsNozareCont = document.getElementById('citsNozareCont');
         const citsNozareInput = document.getElementById('citsNozare');
+    
+        if (nozareSelect && citsNozareCont && citsNozareInput) {
+            nozareSelect.addEventListener('change', function() {
+                if (this.value === 'Cits') {
+                    console.log('Cits selected - showing input field');
+                    citsNozareCont.style.display = 'block'; 
+                    citsNozareInput.setAttribute('required', 'required');
+                } else {
+                    console.log('Cits not selected - hiding input field');
+                    citsNozareCont.style.display = 'none'; 
+                    citsNozareInput.removeAttribute('required'); 
+                }
+            });
+        } else {
+            console.error('One or more elements are missing in the DOM.');
+        }
+    });
 
-        nozareSelect.addEventListener('change', function() {
-            if (this.value === 'Cits') {
-                citsNozareCont.style.display = 'block';
-                citsNozareInput.setAttribute('required', 'required');
-            } else {
-                citsNozareCont.style.display = 'none'; 
-                citsNozareInput.removeAttribute('required');
+    document.addEventListener('DOMContentLoaded', function () {
+        deleteButton.addEventListener('click', async function () {
+            if (!selectedProblemId) return;
+
+            if (confirm('Vai tiešām vēlaties dzēst šo problēmu?')) {
+                try {
+                    const response = await fetch(`/problems/${selectedProblemId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    console.log('response:', response);
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const result = await response.json();
+                    console.log('rezultāts:', result);
+
+                    const deletedRow = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
+                    if (deletedRow) {
+                        deletedRow.remove();
+                    }
+
+                    detailsContent.innerHTML = '<p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>';
+                    deleteButton.style.display = 'none';
+
+                    alert('Problēma veiksmīgi izdzēsta!');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Neizdevās dzēst problēmu. Mēģiniet vēlreiz.');
+                }
             }
         });
     });
-
-    deleteButton.addEventListener('click', async function () {
-        if (!selectedProblemId) return;
-
-        if (confirm('Vai tiešām vēlaties dzēst šo problēmu?')) {
-            try {
-                const response = await fetch(`/problems/${selectedProblemId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                console.log('response:', response);
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const result = await response.json();
-                console.log('rezultāts:', result);
-
-                const deletedRow = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
-                if (deletedRow) {
-                    deletedRow.remove();
-                }
-
-                detailsContent.innerHTML = '<p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>';
-                deleteButton.style.display = 'none';
-
-                alert('Problēma veiksmīgi izdzēsta!');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Neizdevās dzēst problēmu. Mēģiniet vēlreiz.');
-            }
-        }
-    });
-});
+}); 

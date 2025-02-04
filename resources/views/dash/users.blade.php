@@ -15,9 +15,11 @@
                 <td><p>{{ $user->name }}</p></td>
                 <td><p>{{ $user->email }}</p></td>
                 <td class="table-actions">
-                    <button class="btn btn-danger" data-action="{{ route('users.destroy', $user->id) }}" onclick="showConfirmPopup('{{ route('users.destroy', $user->id) }}')">
-                        Noņemt
-                    </button>
+                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Noņemt</button>
+                    </form>
                 </td>
             </tr>
         @endforeach

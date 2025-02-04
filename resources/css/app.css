@@ -252,16 +252,18 @@ h3{
 }
 #citsNozareCont {
     transition: opacity 0.3s ease, display 0.3s ease;
+    display: none;
 }
 
 #citsNozareCont[style*="display: none"] {
     opacity: 0;
-    display: block !important;
+    display: block !important; 
     visibility: hidden;
 }
 
 #citsNozareCont[style*="display: block"] {
     opacity: 1;
+    display: block !important; 
     visibility: visible;
 }
 footer{
