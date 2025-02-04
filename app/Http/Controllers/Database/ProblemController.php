@@ -25,6 +25,7 @@ class ProblemController extends Controller
     {
         $request->validate([
             'nozare' => ['required', 'string'],
+            'citsNozare' => ['nullable', 'string', 'max:60'],
             'virsraksts' => ['required', 'string', 'max:255'],
             'apraksts' => ['required', 'string'],
             'laiks' => ['nullable', 'string'],
@@ -32,7 +33,8 @@ class ProblemController extends Controller
         ]);
     
         $problem = new Problem();
-        $problem->nozare = $request->input('nozare');
+        $nozare = $request->input('nozare') === 'Cits' ? $request->input('citsNozare') : $request->input('nozare');
+        $problem->nozare = $nozare;
         $problem->virsraksts = $request->input('virsraksts');
         $problem->apraksts = $request->input('apraksts');
         $problem->laiks = $request->input('laiks');
@@ -63,9 +65,9 @@ class ProblemController extends Controller
     {
         $problem = Problem::findOrFail($id);
         $problem->delete();
-
+    
         Cache::forget('problem_' . $id);
     
-        return redirect()->route('dashboard')->with('success', 'Problēma izdzēsta!');
+        return response()->json(['message' => 'Problēma izdzēsta!'], 200);
     }
 }

@@ -5,7 +5,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <main>
         <h1>Problēmas</h1>
-        <section class="problemas">
+        <section class="problems">
             <div class="problemHolder">
                 <table class="table">
                     <tr class="table-head">
@@ -18,7 +18,7 @@
                         {{-- <th>Izveidošanas laiks</th> --}}
                     </tr>
                     @foreach ($problems as $problem)
-                    <tr class="problemTable-row" data-id="{{ $problem->id }}">
+                        <tr class="problemTable-row" data-id="{{ $problem->id }}">
                             <td>
                                 <p>{{ $problem->id }}</p>
                             </td>
@@ -44,6 +44,7 @@
                         </tr>
                     @endforeach
                 </table>
+                {{ $problems->links() }}
             </div>
             <div class="problemHolder" id="problemDetails">
                 <div>
@@ -51,10 +52,12 @@
                     <div id="detailsContent">
                         <p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>
                     </div>
+                    <div id="detailsActions">
+                        <button id="deleteButton" class="btn delete-button" style="display: none;">Dzēst
+                            problēmu</button>
+                    </div>
                 </div>
             </div>
-        </section>
-        {{ $problems->links() }}
         </section>
     </main>
 

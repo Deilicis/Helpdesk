@@ -2,8 +2,8 @@
 @section('title', 'Register')
 @section('content')
 <div class="content">
-    <main class="registerHolder">
-    <form method="POST" action="{{ route('register') }}" class="REG">
+    <main class="main">
+    <form method="POST" action="{{ route('register') }}" class="inputCont">
         @csrf
         <!-- Name -->
         <div class="inputCont">

@@ -1,12 +1,11 @@
 @extends('layouts.guestLayout')
 
-
 @section('title', 'Form')
 
 @section('content')
 <div class="content">
     <main>
-        <div class="formHolder">
+        <div class="formCont">
             <h1>Problēma</h1>
             <form action="{{ url('/nosutit') }}" method="post" enctype="multipart/form-data" class="form">
                 @csrf
@@ -21,6 +20,12 @@
                         <option value="Cits">Cits</option>
                     </select>
                 </div>
+                
+                <div class="inputCont" id="citsNozareCont" style="display: none;">
+                    <x-input-label for="citsNozare" class="label" :value="__('Lūdzu, norādiet nozari')"/>
+                    <input id="citsNozare" class="ievade" type="text" name="citsNozare" maxlength="60"/>
+                </div>
+
                 <div class="inputCont">
                     <x-input-label for="title" class="label" :value="__('Virsraksts')"/>
                     <input id="title" class="ievade" type="text" name="virsraksts" required maxlength="60"/>

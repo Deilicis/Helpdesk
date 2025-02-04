@@ -2,9 +2,9 @@
 @section('title', 'Login')
 @section('content')
 <div class="content">
+    <main class="main">
     <h1>Ielogoties</h1>
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    <div class="formHolder">
     <form class="form" method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -37,19 +37,20 @@
         </div>
 
         <div>
-            @if (Route::has('password.request'))
+            {{-- @if (Route::has('password.request'))
                 <a class="link" href="{{ route('password.request') }}">
                     {{ __('Parole aizmirsta?') }}
                 </a>
-            @endif
+            @endif --}}
 
             <button class="btn">
                 {{ __('Log in') }}
             </button>
         </div>
     </form>
+</main>
 </div>
     @yield('footer')
 
-</div>
+
 @endsection
