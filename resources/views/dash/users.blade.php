@@ -3,6 +3,7 @@
 @section('content')
 <div class="content">
     <h1>Lietotāji</h1>
+    <div class="userHolder">
     <table class="table">
         <tr class="table-head">
             <th>Vārds</th>
@@ -26,8 +27,6 @@
     </table>
     {{ $users->links() }}
 </div>
+</div>
 
-<x-confirm-popup>
-    Vai tiešām vēlaties izdzēst lietotāju?
-</x-confirm-popup>
 @endsection

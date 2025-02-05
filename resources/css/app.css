@@ -1,191 +1,239 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-     font-family: Figtree, sans-serif; 
-     -webkit-font-smoothing: antialiased;
-     -moz-osx-font-smoothing: grayscale;
-     background-color: whitesmoke; 
-     color: rgb(0, 0, 0);
-     height:100%;
-     
-     
+
+body {
+    font-family: Figtree, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: whitesmoke;
+    color: black;
+    height: 100%;
 }
-.content{
+
+.content {
     min-height: 100vh;
 }
-h1{
-    color: rgba(0, 0, 0);
+
+h1 {
+    color: black;
     font-size: 2rem;
     text-align: center;
 }
-h2{
-    color: rgb(255, 255, 255);
+
+h2 {
+    color: white;
     font-size: 1.3rem;
     text-align: center;
     padding: 0.5rem;
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid white;
 }
-.header{
+
+.header,
+.dashHeader {
+    z-index: 999;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 1rem 2rem;
+    height: 4rem;
+}
+
+.header {
     background-color: rgb(50, 50, 50);
-    display: flex;
-    justify-content: space-between;
-    height: 4rem;
 }
-.dashHeader{
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: rgb(98, 98, 98);;
+
+.dashHeader {
+    background-color: rgb(98, 98, 98);
     margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    height: 4rem;
 }
-.header nav, .dashHeader nav{
+
+.header nav,
+.dashHeader nav {
     display: flex;
     flex-direction: row;
-    justify-content: left;
     align-items: center;
 }
 
-.option{
+.option {
     text-decoration: underline;
-    margin: 0rem 1rem;
+    margin: 0 1rem;
     font-size: 1.2rem;
-    padding: 0.5rem 0.5rem;
-    color: #fff;
+    padding: 0.5rem;
+    color: white;
+    transition: transform 0.2s ease-in-out;
 }
-.option:hover{
+
+.option:hover {
     transform: scale(1.1);
 }
-.label{
+
+.label {
     color: black;
-    margin: 0rem 0rem 1rem 0.3rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
 }
-nav{
+
+nav {
     display: flex;
     flex-direction: column;
 }
-.inputCont{
+
+.inputCont,
+.form {
     background-color: rgb(207, 207, 207);
-    padding: 1.4rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
-    margin: 0.3rem 0rem;
+    padding: 1.4rem;
     width: 90%;
+    margin: 0.3rem 0;
 }
 
-
-.formCont{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80%;
-}
-.form{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin: 1rem 0rem;
-    background-color: rgb(207, 207, 207);
-    border-radius:2rem;
-}
-.content form{
+.form {
+    margin: 1rem 0;
+    border-radius: 2rem;
     width: 70%;
     margin: 2rem 1rem;
 }
-#description{
-    overflow-y: scroll;
-}
 
-.authHolder{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.main{
+.formCont {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#description {
+    overflow-y: auto;
+}
+
+.authHolder,
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    flex-direction: column;
     margin: 1.5rem;
 }
-.ievade{
-    border: 1px solid rgb(50, 50, 50);;
+
+.ievade {
+    border: 1px solid rgb(50, 50, 50);
     border-radius: 0.5rem;
     padding: 0.5rem;
     width: 99%;
     color: black;
     background-color: whitesmoke;
+    transition: border 0.2s ease-in-out;
 }
-.ievade:hover{
-    border: 1px solid rgba(0, 0, 0);
+
+.ievade:hover,
+.ievade:focus {
+    border-color: black;
 }
-.ievade:focus{
-    border: 1px solid rgba(0, 0, 0, 1);
+
+.ievade::placeholder {
+    color: rgb(50, 50, 50);
 }
-.ievade::placeholder{
-    color: rgb(50, 50, 50);;
-}
-.btn{
+
+.btn {
     border: 3px solid rgb(50, 50, 50);
     color: whitesmoke;
     background-color: rgb(50, 50, 50);
     padding: 0.5rem;
     border-radius: 0.3rem;
-    margin: 1rem 0rem;
+    margin: 1rem 0;
     width: 8rem;
     cursor: pointer;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
-.btn:hover{
-    background-color: rgb(50, 50, 50);
+
+.btn:hover {
     transform: scale(1.1);
     border-color: rgb(53, 0, 152);
 }
-.dropdown{
+
+.dropdown {
     background-color: rgb(50, 50, 50);
-    border-color: black;
-    border-width: 2px;
+    border: 2px solid black;
 }
-.problems{
+
+.problems {
     display: flex;
-    flex-direction: row;
     align-items: start;
-    
+    flex-wrap: wrap;
     justify-content: space-evenly;
     margin: 1rem 0.5rem;
 }
+
 .problemHolder{
-    height: 47.5rem;
+    height: 49rem;
     width: 670px;
-    border: 1px solid rgb(0, 0, 0);
-    margin-bottom: 2rem;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.table{
+#apraksts {
+    max-height: 4rem;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination a,
+.pagination span {
+    color: black;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: 1px solid black;
+    margin: 0 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.pagination a:hover {
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+.pagination .active span {
+    background-color: rgb(50, 50, 50);
+    color: white;
+    border-color: rgb(50, 50, 50);
+}
+
+.table {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
-.table-head{
+
+.table-head {
     background-color: rgb(158, 158, 158);
 }
-.table-row, .problemTable-row{
+
+.table-row,
+.problemTable-row,
+.userTable-row {
     border: 1px solid rgb(50, 50, 50);
     cursor: pointer;
 }
-.userTable-row{
-    border: 1px solid rgb(50, 50, 50);
-}
-td p{
+
+td p {
     text-align: center;
     width: 6.1rem;
     padding: 0.37rem;
@@ -195,9 +243,10 @@ td p{
     text-overflow: ellipsis;
 }
 
-h3{
+h3 {
     font-weight: bold;
 }
+
 .problem-details {
     display: flex;
     flex-direction: column;
@@ -212,64 +261,70 @@ h3{
     margin-top: 10px;
 }
 
-.link{
+.link {
     text-decoration: underline;
     font-size: 1rem;
-    color: rgb(50, 50, 50);;
+    color: rgb(50, 50, 50);
 }
-.remember{
-    color: rgb(50, 50, 50);;
+
+.remember {
+    color: rgb(50, 50, 50);
     font-size: 1rem;
 }
-.label{
+
+.label {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
-.label input{
-    margin: 0rem 0.5rem;
+
+.label input {
+    margin: 0 0.5rem;
 }
-#problemDetails p{
+
+#problemDetails p {
     margin: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-#detailsContent{
+
+#detailsContent,
+#detailsActions {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 1rem 0rem;
+    margin: 1rem 0;
 }
-#detailsActions{
-    display: flex;
+
+#detailsActions {
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem 0rem;
 }
+
 #citsNozareCont {
-    transition: opacity 0.3s ease, display 0.3s ease;
     display: none;
+    visibility: visible;
+    width: 100%;
+    height: auto;
+    position: static;
 }
 
 #citsNozareCont[style*="display: none"] {
     opacity: 0;
-    display: block !important; 
     visibility: hidden;
 }
 
 #citsNozareCont[style*="display: block"] {
     opacity: 1;
-    display: block !important; 
     visibility: visible;
 }
-footer{
+
+footer {
+    z-index: 999;
     text-align: center;
     padding: 1rem 2rem;
-    color: #fff;
+    color: white;
     background-color: rgb(50, 50, 50);
     position: static;
     height: 4rem;

@@ -5,27 +5,8 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const deleteButtons = document.querySelectorAll('.btn-danger');
-//     deleteButtons.forEach(button => {
-//         button.addEventListener('click', function (event) {
-//             event.preventDefault();
-//             const action = this.getAttribute('data-action');
-//             showConfirmPopup(action);
-//         });
-//     });
-// });
-
-// window.showConfirmPopup = function (action) {
-//     document.getElementById('deleteUserForm').action = action;
-//     document.getElementById('confirmDeletePopup').style.display = 'flex';
-// }
-
-// window.hideConfirmPopup = function () {
-//     document.getElementById('confirmDeletePopup').style.display = 'none';
-// }
-
 document.addEventListener('DOMContentLoaded', function () {
+    //problem view details
     const problemRows = document.querySelectorAll('.problemTable-row');
     const detailsContent = document.getElementById('detailsContent');
     const deleteButton = document.getElementById('deleteButton');
@@ -51,11 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p><strong>ID:</strong><br> ${problem.id}</p>
                     <p><strong>Nozare:</strong><br> ${problem.nozare}</p>
                     <p><strong>Virsraksts:</strong><br> ${problem.virsraksts}</p>
-                    <p><strong>Apraksts:</strong><br> ${problem.apraksts}</p>
+                    <p id='apraksts'><strong>Apraksts:</strong><br> ${problem.apraksts}</p>
                     <p><strong>Laiks:</strong><br> ${problem.laiks || '-'}</p>
                     <p><strong>Epasts:</strong><br> ${problem.epasts}</p>
                 `;
-
 
                 deleteButton.style.display = 'block';
             } catch (error) {
@@ -73,65 +53,58 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const nozareSelect = document.getElementById('nozare');
-        const citsNozareCont = document.getElementById('citsNozareCont');
-        const citsNozareInput = document.getElementById('citsNozare');
-    
-        if (nozareSelect && citsNozareCont && citsNozareInput) {
-            nozareSelect.addEventListener('change', function() {
-                if (this.value === 'Cits') {
-                    console.log('Cits selected - showing input field');
-                    citsNozareCont.style.display = 'block'; 
-                    citsNozareInput.setAttribute('required', 'required');
-                } else {
-                    console.log('Cits not selected - hiding input field');
-                    citsNozareCont.style.display = 'none'; 
-                    citsNozareInput.removeAttribute('required'); 
+    // delete problem
+    deleteButton.addEventListener('click', async function () {
+        if (!selectedProblemId) return;
+
+        if (confirm('Vai tiešām vēlaties dzēst šo problēmu?')) {
+            try {
+                const response = await fetch(`/problems/${selectedProblemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            });
-        } else {
-            console.error('One or more elements are missing in the DOM.');
+
+                const result = await response.json();
+                console.log('rezultāts:', result);
+
+                const deletedRow = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
+                if (deletedRow) {
+                    deletedRow.remove();
+                }
+
+                detailsContent.innerHTML = '<p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>';
+                deleteButton.style.display = 'none';
+
+                alert('Problēma veiksmīgi izdzēsta!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Neizdevās dzēst problēmu. Mēģiniet vēlreiz.');
+            }
         }
     });
+    // nozare select
+    const nozareSelect = document.getElementById('nozare');
+    const citsNozareCont = document.getElementById('citsNozareCont');
+    const citsNozareInput = document.getElementById('citsNozare');
 
-    document.addEventListener('DOMContentLoaded', function () {
-        deleteButton.addEventListener('click', async function () {
-            if (!selectedProblemId) return;
-
-            if (confirm('Vai tiešām vēlaties dzēst šo problēmu?')) {
-                try {
-                    const response = await fetch(`/problems/${selectedProblemId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Content-Type': 'application/json',
-                        },
-                    });
-
-                    console.log('response:', response);
-
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-
-                    const result = await response.json();
-                    console.log('rezultāts:', result);
-
-                    const deletedRow = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
-                    if (deletedRow) {
-                        deletedRow.remove();
-                    }
-
-                    detailsContent.innerHTML = '<p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>';
-                    deleteButton.style.display = 'none';
-
-                    alert('Problēma veiksmīgi izdzēsta!');
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Neizdevās dzēst problēmu. Mēģiniet vēlreiz.');
-                }
+    if (nozareSelect && citsNozareCont && citsNozareInput) {
+        nozareSelect.addEventListener('change', function () {
+            if (this.value === 'Cits') {
+                citsNozareCont.style.display = 'block';
+                citsNozareInput.setAttribute('required', 'required');
+            } else {
+                citsNozareCont.style.display = 'none';
+                citsNozareInput.removeAttribute('required');
             }
         });
-    });
-}); 
+    } else {
+        console.error('One or more elements are missing in the DOM.');
+    }
+});

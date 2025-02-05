@@ -6,6 +6,7 @@
     <main>
         <h1>Problēmas</h1>
         <section class="problems">
+            <!-- First problemHolder (Table of problems) -->
             <div class="problemHolder">
                 <table class="table">
                     <tr class="table-head">
@@ -15,22 +16,13 @@
                         <th>Apraksts</th>
                         <th>Laiks</th>
                         <th>Epasts</th>
-                        {{-- <th>Izveidošanas laiks</th> --}}
                     </tr>
                     @foreach ($problems as $problem)
                         <tr class="problemTable-row" data-id="{{ $problem->id }}">
-                            <td>
-                                <p>{{ $problem->id }}</p>
-                            </td>
-                            <td>
-                                <p>{{ $problem->nozare }}</p>
-                            </td>
-                            <td>
-                                <p>{{ $problem->virsraksts }}</p>
-                            </td>
-                            <td>
-                                <p id="truncate">{{ $problem->apraksts }}</p>
-                            </td>
+                            <td><p>{{ $problem->id }}</p></td>
+                            <td><p>{{ $problem->nozare }}</p></td>
+                            <td><p>{{ $problem->virsraksts }}</p></td>
+                            <td><p id="truncate">{{ $problem->apraksts }}</p></td>
                             <td>
                                 @if ($problem->laiks == null)
                                     <p>-</p>
@@ -38,13 +30,10 @@
                                     <p>{{ $problem->laiks }}</p>
                                 @endif
                             </td>
-                            <td>
-                                <p>{{ $problem->epasts }}</p>
-                            </td>
+                            <td><p>{{ $problem->epasts }}</p></td>
                         </tr>
                     @endforeach
-                </table>
-                {{ $problems->links() }}
+                </table> 
             </div>
             <div class="problemHolder" id="problemDetails">
                 <div>
@@ -53,13 +42,14 @@
                         <p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>
                     </div>
                     <div id="detailsActions">
-                        <button id="deleteButton" class="btn delete-button" style="display: none;">Dzēst
-                            problēmu</button>
+                        <button id="deleteButton" class="btn delete-button" style="display: none;">Dzēst problēmu</button>
                     </div>
                 </div>
             </div>
+            <div class="pagination">
+                {{ $problems->links() }}
+            </div>
         </section>
     </main>
-
 </div>
 @endsection
