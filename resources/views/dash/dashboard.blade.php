@@ -10,12 +10,12 @@
             <div class="problemHolder">
                 <table class="table">
                     <tr class="table-head">
-                        <th>ID</th>
-                        <th>Nozare</th>
-                        <th>Virsraksts</th>
-                        <th>Apraksts</th>
-                        <th>Laiks</th>
-                        <th>Epasts</th>
+                        <th>@sortablelink('id', 'ID')</th>
+                        <th>@sortablelink('nozare', 'Nozare')</th>
+                        <th>@sortablelink('virsraksts', 'Virsraksts')</th>
+                        <th>@sortablelink('apraksts', 'Apraksts')</th>
+                        <th>@sortablelink('laiks', 'Laiks')</th>
+                        <th>@sortablelink('epasts', 'Epasts')</th>
                     </tr>
                     @foreach ($problems as $problem)
                         <tr class="problemTable-row" data-id="{{ $problem->id }}">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="pagination">
-                {{ $problems->links() }}
+                {{ $problems->appends(request()->except('page'))->links() }}
             </div>
         </section>
     </main>

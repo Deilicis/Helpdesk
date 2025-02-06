@@ -29,13 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 const problem = await response.json();
 
                 detailsContent.innerHTML = `
-                    <p><strong>ID:</strong><br> ${problem.id}</p>
-                    <p><strong>Nozare:</strong><br> ${problem.nozare}</p>
-                    <p><strong>Virsraksts:</strong><br> ${problem.virsraksts}</p>
-                    <p id='apraksts'><strong>Apraksts:</strong><br> ${problem.apraksts}</p>
-                    <p><strong>Laiks:</strong><br> ${problem.laiks || '-'}</p>
-                    <p><strong>Epasts:</strong><br> ${problem.epasts}</p>
-                `;
+                <div class="details-grid">
+                    <div class="details-row">
+                        <p><strong>ID:</strong> ${problem.id}</p>
+                        <p><strong>Virsraksts:</strong> ${problem.virsraksts}</p>
+                        <p><strong>Nozare:</strong> ${problem.nozare}</p>
+                    </div>
+                    <div class="details-row" id="apraksts-row">
+                        <p><strong>Apraksts:</strong></p>
+                        <div id="apraksts-container">
+                            <div id="apraksts-content">${problem.apraksts}</div>
+                        </div>
+                    </div>
+                    <div class="details-row">
+                        <p><strong>Laiks:</strong> ${problem.laiks || '-'}</p>
+                        <p><strong>Epasts:</strong> ${problem.epasts}</p>
+                    </div>
+                </div>
+            `;
 
                 deleteButton.style.display = 'block';
             } catch (error) {

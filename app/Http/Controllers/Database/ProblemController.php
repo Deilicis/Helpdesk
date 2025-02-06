@@ -11,7 +11,6 @@ use Illuminate\View\View;
 use App\Models\Problem;
 use Illuminate\Support\Facades\Cache;
 
-
 class ProblemController extends Controller
 {
     /**
@@ -47,7 +46,7 @@ class ProblemController extends Controller
     }
     public function index(): View
     {
-        $problems = Problem::paginate(15);
+        $problems = Problem::sortable()->paginate(15);
         return view('dash.dashboard', compact('problems'));
     }
    
