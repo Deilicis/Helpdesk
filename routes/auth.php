@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/problems/{id}', [ProblemController::class, 'show'])->name('problems.show');
 
+    Route::patch('/problems/{id}/priority', [ProblemController::class, 'updatePriority'])->name('problems.updatePriority');
+
+    Route::patch('/problems/{id}/status', [ProblemController::class, 'updateStatus'])->name('problems.updateStatus');
+
     Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');

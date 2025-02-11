@@ -20,10 +20,9 @@
                         <option value="Cits">Cits</option>
                     </select>
                 </div>
-                
-                <div class="inputCont" id="citsNozareCont" style="display: none;">
-                    <x-input-label for="citsNozare" class="label" :value="__('Lūdzu, norādiet nozari')"/>
-                    <input id="citsNozare" class="ievade" type="text" name="citsNozare" maxlength="60"/>
+
+                <div class="inputCont" id="customNozareCont" style="display: none;">
+                    <input id="customNozare" class="nozareivd ievade" type="text" name="customNozare" maxlength="60" placeholder="Norādiet nozari"/>
                 </div>
 
                 <div class="inputCont">
@@ -52,3 +51,21 @@
     </main>
 </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nozareSelect = document.getElementById('nozare');
+        const customNozareCont = document.getElementById('customNozareCont');
+        const customNozareInput = document.getElementById('customNozare');
+
+        nozareSelect.addEventListener('change', function () {
+            if (this.value === 'Cits') {
+                customNozareCont.style.display = 'block';
+                customNozareInput.setAttribute('required', 'required');
+            } else {
+                customNozareCont.style.display = 'none';
+                customNozareInput.removeAttribute('required');
+            }
+        });
+    });
+</script>

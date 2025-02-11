@@ -174,7 +174,7 @@ nav {
 .problemHolder{
     height: 49rem;
     width: 670px;
-    border: 1px solid black;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -308,10 +308,10 @@ nav {
 .table-head {
     background-color: rgb(158, 158, 158);
 }
-th{
+.problems th{
   cursor: pointer;  
 }
-th:hover{
+.problems th:hover{
     background-color: rgb(235, 235, 235);
     transition: 0.2s;
 }
@@ -347,11 +347,14 @@ h3 {
     font-size: 1rem;
 }
 
-.label {
+.label, .nozarelbl {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
-
+.nozarelbl{
+    font-size: 1.2rem;
+}
 .label input {
     margin: 0 0.5rem;
 }

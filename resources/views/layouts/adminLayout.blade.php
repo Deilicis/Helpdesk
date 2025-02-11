@@ -15,7 +15,7 @@
         @if (Route::has('login'))
             <nav>
                 @auth
-                    <h2>Dashboard</h2>
+                    <h2>Helpdesk</h2>
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button class="option">

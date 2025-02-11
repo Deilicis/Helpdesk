@@ -100,22 +100,5 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-    // nozare select
-    const nozareSelect = document.getElementById('nozare');
-    const citsNozareCont = document.getElementById('citsNozareCont');
-    const citsNozareInput = document.getElementById('citsNozare');
-
-    if (nozareSelect && citsNozareCont && citsNozareInput) {
-        nozareSelect.addEventListener('change', function () {
-            if (this.value === 'Cits') {
-                citsNozareCont.style.display = 'block';
-                citsNozareInput.setAttribute('required', 'required');
-            } else {
-                citsNozareCont.style.display = 'none';
-                citsNozareInput.removeAttribute('required');
-            }
-        });
-    } else {
-        console.error('One or more elements are missing in the DOM.');
-    }
+    
 });

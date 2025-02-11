@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ProblemController extends Controller
 {
-    /**
-     * Store the problem data in the database.
-     */
+     // Store the problem data in the database.
     public function create(): View
     {
         return view('form');
@@ -24,15 +22,19 @@ class ProblemController extends Controller
     {
         $request->validate([
             'nozare' => ['required', 'string'],
-            'citsNozare' => ['nullable', 'string', 'max:60'],
             'virsraksts' => ['required', 'string', 'max:255'],
             'apraksts' => ['required', 'string'],
             'laiks' => ['nullable', 'string'],
             'epasts' => ['required', 'email'],
+            'customNozare' => ['nullable', 'string', 'max:255'],
         ]);
     
+        $nozare = $request->input('nozare');
+        if ($nozare === 'Cits') {
+            $nozare = $request->input('customNozare');
+        }
+    
         $problem = new Problem();
-        $nozare = $request->input('nozare') === 'Cits' ? $request->input('citsNozare') : $request->input('nozare');
         $problem->nozare = $nozare;
         $problem->virsraksts = $request->input('virsraksts');
         $problem->apraksts = $request->input('apraksts');
@@ -44,12 +46,13 @@ class ProblemController extends Controller
     
         return redirect()->back()->with('success', 'Problēma nosūtīta!');
     }
+    
     public function index(): View
     {
         $problems = Problem::sortable()->paginate(15);
         return view('dash.dashboard', compact('problems'));
     }
-   
+
 
     public function show($id)
     {
@@ -57,16 +60,42 @@ class ProblemController extends Controller
         $problem = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($id) {
             return Problem::findOrFail($id);
         });
-    
+
         return response()->json($problem);
     }
+
+    public function updatePriority(Request $request, $id){
+    $request->validate([
+        'priority' => ['required', 'in:low,high,critical'],
+    ]);
+
+    $problem = Problem::findOrFail($id);
+    $problem->priority = $request->input('priority');
+    $problem->save();
+
+    return redirect()->back()->with('success', 'Prioritāte atjaunināta!');
+}
+
+public function updateStatus(Request $request, $id){
+    $request->validate([
+        'status' => ['required', 'in:open,closed'],
+    ]);
+
+    $problem = Problem::findOrFail($id);
+    $problem->status = $request->input('status');
+    $problem->save();
+
+    return redirect()->back()->with('success', 'Statuss atjaunināts!');
+}
+
+
     public function destroy($id)
     {
         $problem = Problem::findOrFail($id);
         $problem->delete();
-    
+
         Cache::forget('problem_' . $id);
-    
+
         return response()->json(['message' => 'Problēma izdzēsta!'], 200);
     }
 }

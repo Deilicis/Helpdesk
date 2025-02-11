@@ -15,14 +15,17 @@ class Problem extends Model
      */
     protected $guarded = [
         'nozare',
+        'customNozare',
         'virsraksts',
         'apraksts',
         'laiks',
         'epasts',
+        'priority',
+        'status',
     ];
   
 
-    public $sortable = ['id', 'nozare', 'virsraksts', 'apraksts', 'laiks', 'epasts'];
+    public $sortable = ['id', 'nozare', 'virsraksts', 'apraksts', 'laiks', 'epasts', 'priority', 'status'];
     
     protected $stopOnFirstFailure = true;
 }
