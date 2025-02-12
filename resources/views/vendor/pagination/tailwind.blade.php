@@ -17,7 +17,7 @@
                 {{-- Previous Page Link --}}
                 @if ($paginator->onFirstPage())
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                        <span style="color: #ccc;" class="page-link" aria-hidden="true">@lang('pagination.previous')</span>
+                        <span class="page-link" aria-hidden="true">@lang('pagination.previous')</span>
                     </li>
                 @else
                     <li class="page-item">
@@ -68,7 +68,7 @@
                     </li>
                 @else
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                        <span style="color: #ccc;" class="page-link" aria-hidden="true">@lang('pagination.next')</span>
+                        <span class="page-link" aria-hidden="true">@lang('pagination.next')</span>
                     </li>
                 @endif
             </ul>

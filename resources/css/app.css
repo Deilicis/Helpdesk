@@ -14,7 +14,6 @@ body {
     min-height: 100vh;
     
 }
-
 h1 {
     color: black;
     font-size: 2rem;
@@ -56,7 +55,6 @@ h2 {
 }
 
 .option {
-    text-decoration: underline;
     margin: 0 1rem;
     font-size: 1.2rem;
     padding: 0.5rem;
@@ -65,6 +63,10 @@ h2 {
 }
 
 .option:hover {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(50, 50, 50);
+    border: 1px solid white;
     transform: scale(1.1);
 }
 
@@ -98,7 +100,9 @@ nav {
     width: 70%;
     margin: 2rem 1rem;
 }
-
+.container{
+    margin: 1rem;
+}
 .formCont {
     display: flex;
     flex-direction: column;
@@ -122,7 +126,7 @@ nav {
     margin: 1.5rem;
 }
 
-.ievade {
+.input {
     border: 1px solid rgb(50, 50, 50);
     border-radius: 0.5rem;
     padding: 0.5rem;
@@ -132,12 +136,12 @@ nav {
     transition: border 0.2s ease-in-out;
 }
 
-.ievade:hover,
-.ievade:focus {
+.input:hover,
+.input:focus {
     border-color: black;
 }
 
-.ievade::placeholder {
+.input::placeholder {
     color: rgb(50, 50, 50);
 }
 
@@ -147,7 +151,7 @@ nav {
     background-color: rgb(50, 50, 50);
     padding: 0.5rem;
     border-radius: 0.3rem;
-    margin: 1rem 0;
+    margin: 1rem 1rem;
     width: 8rem;
     cursor: pointer;
     transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
@@ -171,18 +175,19 @@ nav {
     margin: 1rem 0.5rem;
 }
 
-.problemHolder{
-    height: 49rem;
-    width: 670px;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.problemHolder {
+    transition: opacity 0.3s ease-in-out;
 }
 
-.problem-details {
-    display: flex;
-    flex-direction: column;
+#problemDetails {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#problemDetails[style*="display: block"] {
+    opacity: 1;
+    visibility: visible;
 }
 
 .problem-header {
@@ -257,12 +262,12 @@ nav {
 
 #apraksts-container::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 0.25rem;
 }
 
 #apraksts-container::-webkit-scrollbar-thumb {
     background: #888;
-    border-radius: 4px;
+    border-radius: 0.25rem;
 }
 
 #apraksts-container::-webkit-scrollbar-thumb:hover {
@@ -307,9 +312,11 @@ nav {
 
 .table-head {
     background-color: rgb(158, 158, 158);
+    
 }
 .problems th{
   cursor: pointer;  
+  border: 1px solid black;
 }
 .problems th:hover{
     background-color: rgb(235, 235, 235);
@@ -324,7 +331,7 @@ nav {
 
 td p {
     text-align: center;
-    width: 6.1rem;
+    width: 10rem;
     padding: 0.37rem;
     margin: 0.37rem;
     white-space: nowrap;
@@ -376,7 +383,14 @@ h3 {
     opacity: 1;
     visibility: visible;
 }
-
+.div-profile-section{
+    background-color: rgb(207, 207, 207);
+    border-radius: 0.25rem;
+}
+.div-profile-section h2{
+    color: black;
+    border: 1px solid black;
+}
 footer {
     z-index: 999;
     text-align: center;

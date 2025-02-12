@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Database\ProblemController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\UsersController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('dash.dashboard');
@@ -23,3 +23,11 @@ Route::post('/nosutit', [ProblemController::class, 'store']);
 Route::get('/dashboard', [ProblemController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

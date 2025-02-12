@@ -11,7 +11,7 @@
         <!-- Email Address -->
         <div class="inputCont">
             <x-input-label class="label" for="email" :value="__('Epasts')" />
-            <input class="ievade" id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <input class="input" id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -20,7 +20,7 @@
             <x-input-label class="label" for="password" :value="__('Parole')" />
             
 
-            <input class="ievade" id="password"
+            <input class="input" id="password"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />

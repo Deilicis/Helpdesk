@@ -1,104 +1,114 @@
-import './bootstrap';
 import Alpine from 'alpinejs';
-
 window.Alpine = Alpine;
-
 Alpine.start();
-
 document.addEventListener('DOMContentLoaded', function () {
-    //problem view details
+    // Visi DOM elementi.
     const problemRows = document.querySelectorAll('.problemTable-row');
     const detailsContent = document.getElementById('detailsContent');
     const deleteButton = document.getElementById('deleteButton');
+    const backButton = document.getElementById('backButton');
+    const problemTable = document.getElementById('problemTable');
+    const problemDetails = document.getElementById('problemDetails');
 
-    let selectedProblemId = null;
+    let selectedProblemId = null; // Mainīgais, lai izsekotu izvēlētās problēmas ID
 
+    // Cikls cauri katrai tabūlas rindai
     problemRows.forEach(row => {
+        // Noņemt clickable uz elementiem, kam ir klase .non-clickable
+        const nonClickableCells = row.querySelectorAll('.non-clickable');
+        nonClickableCells.forEach(cell => {
+            cell.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+
+        // EventListener katrai tabulas rindai
         row.addEventListener('click', async function () {
-            const problemId = this.getAttribute('data-id');
-            selectedProblemId = problemId;
+            const problemId = this.getAttribute('data-id'); // iegūst problemId no rindas data-id atribūta
+            selectedProblemId = problemId; // Set the selected problem ID
+
+            problemTable.style.display = 'none';
+            problemDetails.style.display = 'block';
 
             detailsContent.innerHTML = '<p class="loading">Ielādējam detaļas...</p>';
             deleteButton.style.display = 'none';
 
             try {
+                // Fetcho problem details no servera
                 const response = await fetch(`/problems/${problemId}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const problem = await response.json();
 
+                // Problēmas detaļas
                 detailsContent.innerHTML = `
-                <div class="details-grid">
-                    <div class="details-row">
-                        <p><strong>ID:</strong> ${problem.id}</p>
-                        <p><strong>Virsraksts:</strong> ${problem.virsraksts}</p>
-                        <p><strong>Nozare:</strong> ${problem.nozare}</p>
-                    </div>
-                    <div class="details-row" id="apraksts-row">
-                        <p><strong>Apraksts:</strong></p>
-                        <div id="apraksts-container">
-                            <div id="apraksts-content">${problem.apraksts}</div>
+                    <div class="details-grid">
+                        <div class="details-row">
+                            <p><strong>ID:</strong> ${problem.id}</p>
+                            <p><strong>Virsraksts:</strong> ${problem.virsraksts}</p>
+                            <p><strong>Nozare:</strong> ${problem.nozare}</p>
+                        </div>
+                        <div class="details-row" id="apraksts-row">
+                            <p><strong>Apraksts:</strong></p>
+                            <div id="apraksts-container">
+                                <div id="apraksts-content">${problem.apraksts}</div>
+                            </div>
+                        </div>
+                        <div class="details-row">
+                            <p><strong>Laiks:</strong> ${problem.laiks || '-'}</p>
+                            <p><strong>Epasts:</strong> ${problem.epasts}</p>
                         </div>
                     </div>
-                    <div class="details-row">
-                        <p><strong>Laiks:</strong> ${problem.laiks || '-'}</p>
-                        <p><strong>Epasts:</strong> ${problem.epasts}</p>
-                    </div>
-                </div>
-            `;
+                `;
 
-                deleteButton.style.display = 'block';
+                deleteButton.style.display = 'block'; // Parāda izdzēst pogu, kad lādēšana beidzas
             } catch (error) {
+                // Ja lādēšanās neizdodas, parāda ziņojumu un retry pogu.
                 detailsContent.innerHTML = `
                     <p class="error">Neizdevās ielādēt detaļas.</p>
                     <button id="retryButton" class="retry-button">Mēģināt vēlreiz</button>
                 `;
                 deleteButton.style.display = 'none';
 
+                // retry logic
                 const retryButton = document.getElementById('retryButton');
                 retryButton.addEventListener('click', () => {
-                    row.click();
+                    row.click(); // Velreiz izsauc click event
                 });
             }
         });
     });
 
-    // delete problem
-    deleteButton.addEventListener('click', async function () {
-        if (!selectedProblemId) return;
+    // EventListeners atpakaļ pogai.
+    backButton.addEventListener('click', function () {
+        problemDetails.style.display = 'none';
+        problemTable.style.display = 'block';
+    });
 
-        if (confirm('Vai tiešām vēlaties dzēst šo problēmu?')) {
+    // EventListeners problēmas dzēšanas pogai.
+    deleteButton.addEventListener('click', async function () {
+        if (selectedProblemId) { //ja problēma ir izvēlēta, tad turpina
             try {
+                //  Aizsūta DELETE request, lai nodzēstu problēmu no servera
                 const response = await fetch(`/problems/${selectedProblemId}`, {
                     method: 'DELETE',
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        'Content-Type': 'application/json',
-                    },
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
                 });
-
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
-                const result = await response.json();
-                console.log('rezultāts:', result);
-
-                const deletedRow = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
-                if (deletedRow) {
-                    deletedRow.remove();
+                //Ja problēmas izdzēšana izdevās, tad noņem to no tabulas.
+                const rowToDelete = document.querySelector(`.problemTable-row[data-id="${selectedProblemId}"]`);
+                if (rowToDelete) {
+                    rowToDelete.remove();
                 }
-
-                detailsContent.innerHTML = '<p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>';
-                deleteButton.style.display = 'none';
-
-                alert('Problēma veiksmīgi izdzēsta!');
+                backButton.click(); // Izsauc atpakaļ pogu, lai aizietu atpakaļ uz tabulu.
             } catch (error) {
-                console.error('Error:', error);
-                alert('Neizdevās dzēst problēmu. Mēģiniet vēlreiz.');
+                alert('Neizdevās dzēst problēmu.');
             }
         }
     });
-    
 });

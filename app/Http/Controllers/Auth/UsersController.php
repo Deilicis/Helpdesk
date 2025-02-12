@@ -11,7 +11,7 @@ class UsersController
 {
     public function index(): View
     {
-        $users = User::paginate(15);
+        $users = User::paginate(5);
         return view('dash.users', compact('users'));
     }
     public function destroy($id): RedirectResponse

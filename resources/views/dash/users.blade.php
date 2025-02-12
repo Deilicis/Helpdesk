@@ -25,7 +25,9 @@
             </tr>
         @endforeach
     </table>
-    {{ $users->links() }}
+    <div class="pagination">
+        {{ $users->appends(request()->except('page'))->links() }}
+    </div>
 </div>
 </div>
 

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Default Title')</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Fonts and Styles -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'], 'defer')          
@@ -44,17 +47,11 @@
                         </x-dropdown>
                 @else
                     <a href="{{ route('login') }}" class="option">Log in</a>
-    
                 @endauth
                 {{-- <a href="{{ route('form') }}" class="option">Form</a> --}}
                 
             </nav>
         @endif
-        {{-- @if (Route::has('login'))
-        <div class="option">
-            {{ __("Tu esi ielogojies!") }}
-        </div>
-        @endif --}}
     </header>
        @yield('content')
        <footer>
