@@ -28,8 +28,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-    ->name('register');
+
 
     Route::delete('/problems/{id}', [ProblemController::class, 'destroy'])->name('problems.destroy');
 
@@ -38,9 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/problems/{id}/priority', [ProblemController::class, 'updatePriority'])->name('problems.updatePriority');
 
     Route::patch('/problems/{id}/status', [ProblemController::class, 'updateStatus'])->name('problems.updateStatus');
-
+    
+    Route::get('register', [RegisteredUserController::class, 'create'])
+    ->name('register');
+    
     Route::post('register', [RegisteredUserController::class, 'store']);
-
+   
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     
     Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');

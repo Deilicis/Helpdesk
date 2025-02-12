@@ -44,17 +44,11 @@
                         </x-dropdown>
                 @else
                     <a href="{{ route('login') }}" class="option">Log in</a>
-    
                 @endauth
                 {{-- <a href="{{ route('form') }}" class="option">Form</a> --}}
                 
             </nav>
         @endif
-        {{-- @if (Route::has('login'))
-        <div class="option">
-            {{ __("Tu esi ielogojies!") }}
-        </div>
-        @endif --}}
     </header>
        @yield('content')
        <footer>
