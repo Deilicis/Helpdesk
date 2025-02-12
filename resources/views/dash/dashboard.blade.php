@@ -8,21 +8,22 @@
         <section class="problems">
             <div class="problemHolder" id="problemTable">
                 <table class="table">
-                    <tr class="table-head">
-                        <th>@sortablelink('id', 'ID')</th>
-                        <th>@sortablelink('nozare', 'Nozare')</th>
-                        <th>@sortablelink('virsraksts', 'Virsraksts')</th>
-                        <th>@sortablelink('apraksts', 'Apraksts')</th>
-                        <th>@sortablelink('laiks', 'Laiks')</th>
-                        <th>@sortablelink('epasts', 'Epasts')</th>
-                        <th>@sortablelink('editor', 'Atbildīgais')</th>
-                        <th>@sortablelink('priority', 'Prioritāte')</th>
-                        <th>@sortablelink('status', 'Statuss')</th>
-                        <th>@sortablelink('izvLaiks', 'Izveidošanas Laiks')</th>
-                    </tr>
+                    <thead class="bg-primary">
+                        <th scope="col">@sortablelink('id', 'ID')</th>
+                        <th scope="col">@sortablelink('nozare', 'Nozare')</th>
+                        <th scope="col">@sortablelink('virsraksts', 'Virsraksts')</th>
+                        <th scope="col">@sortablelink('apraksts', 'Apraksts')</th>
+                        <th scope="col">@sortablelink('laiks', 'Laiks')</th>
+                        <th scope="col">@sortablelink('epasts', 'Epasts')</th>
+                        <th scope="col">@sortablelink('editor', 'Atbildīgais')</th>
+                        <th scope="col">@sortablelink('priority', 'Prioritāte')</th>
+                        <th scope="col">@sortablelink('status', 'Statuss')</th>
+                        <th scope="col">@sortablelink('izvLaiks', 'Izveidošanas Laiks')</th>
+                    </thead>
+                    <tbody>
                     @foreach ($problems as $problem)
                         <tr class="problemTable-row" data-id="{{ $problem->id }}">
-                            <td><p>{{ $problem->id }}</p></td>
+                            <th scope="row"><p>{{ $problem->id }}</p></th>
                             <td><p>{{ $problem->nozare }}</p></td>
                             <td><p>{{ $problem->virsraksts }}</p></td>
                             <td><p>{{ $problem->apraksts }}</p></td>
@@ -64,6 +65,7 @@
                             <td>laiks</td>
                         </tr>
                     @endforeach
+                </tbody>
                 </table> 
                 <div class="pagination">
                     {{ $problems->appends(request()->except('page'))->links() }}
@@ -75,8 +77,8 @@
                         <p id="defaultMessage">Izvēlieties problēmu, lai redzētu tās detaļas</p>
                     </div>
                     <div id="detailsActions">
-                        <button id="backButton" class="btn back-button">Atpakaļ</button>
-                        <button id="deleteButton" class="btn delete-button" style="display: none;">Dzēst</button>
+                        <button id="backButton" class="btn btn-primary">Atpakaļ</button>
+                        <button id="deleteButton" class="btn btn-danger" style="display: none;">Dzēst</button>
                     </div>
                 </div>
             </div>

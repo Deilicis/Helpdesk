@@ -8,7 +8,7 @@
             <h1>Problēma</h1>
             <form action="{{ url('/nosutit') }}" method="post" enctype="multipart/form-data" class="form">
                 @csrf
-                <div class="container" autofocus>
+                <div class="inputCont" autofocus>
                     <x-input-label for="nozare" class="label" :value="__('Nozare')"/>
                     <select name="nozare" id="nozare" class="input">
                         <option value="Ielas">Ielas</option>
@@ -20,31 +20,31 @@
                     </select>
                 </div>
 
-                <div class="container" id="customNozareCont" style="display: none;">
+                <div class="inputCont" id="customNozareCont" style="display: none;">
                     <input id="customNozare" class="input" type="text" name="customNozare" maxlength="60" placeholder="Norādiet nozari"/>
                 </div>
 
-                <div class="container">
+                <div class="inputCont">
                     <x-input-label for="title" class="label" :value="__('Virsraksts')"/>
-                    <input id="title" class="input" type="text" name="virsraksts" required maxlength="60"/>
+                    <input id="title" class="input" type="text" name="virsraksts" required maxlength="60" placeholder="Ievadiet virsrakstu"/>
                 </div>
-                <div class="container">
+                <div class="inputCont">
                     <x-input-label for="description" class="label" :value="__('Apraksts')" />
-                    <textarea id="description" class="input" type="text" name="apraksts" required rows="5" ></textarea>
+                    <textarea id="description" class="input" type="text" name="apraksts" required rows="5" placeholder="Aprakstiet savu problēmu"></textarea>
                 </div>
-                {{-- <div class="inputCont">
+                {{-- <div class="input">
                     <x-input-label for="uploadImage" class="label" :value="__('Bilde')"/>  
                     <input class="input" type="file" name="uploadImage" id="uploadImage">
                 </div> --}}
-                <div class="container">
+                <div class="inputCont">
                     <x-input-label for="datetime" class="label" :value="__('Datums un Laiks')"/>
-                    <input class="input" type="datetime-local" id="datetime" name="laiks">
+                    <input class="input" type="datetime-local" id="datetime" name="laiks" placeholder="Norādiet problēmas datumu, laiku">
                 </div>
-                <div class="container">
+                <div class="inputCont">
                     <x-input-label for="epasts" class="label" :value="__('Epasts')" />
-                    <input id="epasts" class="input" type="email" name="epasts" required maxlength="60"/>
+                    <input id="epasts" class="input" type="email" name="epasts" required maxlength="60"/ placeholder="Ievadiet savu epastu">
                 </div>
-                <button type="submit" id="formBtn" class="btn">Nosūtīt</button>
+                <button type="submit" id="formBtn" class="btn btn-primary">Nosūtīt</button>
             </form>
         </div>
     </main>
