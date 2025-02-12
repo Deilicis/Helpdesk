@@ -33,10 +33,10 @@
                     <textarea id="description" class="input" type="text" name="apraksts" required rows="5" ></textarea>
                     <textarea id="description" class="input" type="text" name="apraksts" required rows="5" placeholder="Aprakstiet savu problēmu"></textarea>
                 </div>
-                {{-- {{-- <div class="input">
+                {{--<div class="input">
                     <x-input-label for="uploadImage" class="label" :value="__('Bilde')"/>  
                     <input class="input" type="file" name="uploadImage" id="uploadImage">
-                </div> --}}
+                </div>
                     <input class="input" type="file" name="uploadImage" id="uploadImage">
                 </div> --}}
                 <div class="inputCont">
