@@ -30,7 +30,6 @@
                 </div>
                 <div class="inputCont">
                     <x-input-label for="description" class="label" :value="__('Apraksts')" />
-                    <textarea id="description" class="input" type="text" name="apraksts" required rows="5" ></textarea>
                     <textarea id="description" class="input" type="text" name="apraksts" required rows="5" placeholder="Aprakstiet savu problēmu"></textarea>
                 </div>
                 {{--<div class="input">
@@ -41,12 +40,10 @@
                 </div> --}}
                 <div class="inputCont">
                     <x-input-label for="datetime" class="label" :value="__('Datums un Laiks')"/>
-                    <input class="input" type="datetime-local" id="datetime" name="laiks">
                     <input class="input" type="datetime-local" id="datetime" name="laiks" placeholder="Norādiet problēmas datumu, laiku">
                 </div>
                 <div class="inputCont">
                     <x-input-label for="epasts" class="label" :value="__('Epasts')" />
-                    <input id="epasts" class="input" type="email" name="epasts" required maxlength="60"/>
                     <input id="epasts" class="input" type="email" name="epasts" required maxlength="60"/ placeholder="Ievadiet savu epastu">
                 </div>
                 <button type="submit" id="formBtn" class="btn btn-primary">Nosūtīt</button>

@@ -17,7 +17,7 @@
     <header class="header">
         @if (Route::has('login'))
             <nav>
-                @auth
+                {{-- @auth --}}
                     <h2>Helpdesk</h2>
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
@@ -30,8 +30,9 @@
                                 <x-dropdown-link :href="route('profile.edit')">
                                     {{ __('Profils') }}
                                 </x-dropdown-link>
-                            <x-dropdown-link :href="route('register')">
-                               {{ __('Reģistrēt') }}
+                            {{-- <x-dropdown-link :href="route('register')">--}}
+                            <x-dropdown-link :href="url('/dash/register')">
+                                {{ __('Reģistrēt') }}
                             </x-dropdown-link>
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
@@ -48,7 +49,7 @@
                 @else
                     <a href="{{ route('login') }}" class="option">Log in</a>
     
-                @endauth
+                {{-- @endauth --}}
                 {{-- <a href="{{ route('form') }}" class="option">Form</a> --}}
                 
             </nav>

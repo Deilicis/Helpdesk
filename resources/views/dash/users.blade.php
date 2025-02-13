@@ -5,12 +5,12 @@
     <h1>Lietotāji</h1>
     <div class="userHolder">
     <table class="table">
-        <tr class="table-head">
+        <thead class="bg-primary">
             <th>Vārds</th>
             <th>Epasts</th>
             {{-- <th>Parole</th> --}}
             <th>Darbības</th>
-        </tr>
+        </thead>
         @foreach ($users as $user)
             <tr class="userTable-row">
                 <td><p>{{ $user->name }}</p></td>

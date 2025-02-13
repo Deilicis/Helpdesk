@@ -9,7 +9,7 @@ use Flasher\Prime\FlasherInterface;
 use Illuminate\View\View;
 use App\Models\Problem;
 use Illuminate\Support\Facades\Cache;
-
+use App\Models\User;
 class ProblemController extends Controller
 {
     // Atgriež view ar formu problēmas izveidošanai.
@@ -56,9 +56,10 @@ class ProblemController extends Controller
     // Parāda problēmu tabulu ar pagination
     public function index(): View
     {
+        $users = User::all();
         // Iegūst problēmas ar kārtošanu un pagination.
         $problems = Problem::sortable()->paginate(15);
-        return view('dash.dashboard', compact('problems')); // Atgriež dashboard skatījumu ar problēmām.
+        return view('dash.dashboard', compact('problems', 'users')); // Atgriež dashboard skatījumu ar problēmām.
     }
 
     // Parāda konkrētas problēmas detaļas.
@@ -74,7 +75,24 @@ class ProblemController extends Controller
         // Atgriež problēmas detaļas kā JSON atbildi.
         return response()->json($problem);
     }
-
+    public function updateEditor(Request $request, $id)
+    {
+        // Validē editor ievadi.
+        $request->validate([
+            'editor' => ['required', 'exists:users,id'],
+        ]);
+    
+        // Iegūst problēmu un atjaunina editor.
+        $problem = Problem::findOrFail($id);
+        $problem->editor = $request->input('editor');
+        $problem->save();
+    
+        // Izņem problēmu no kešatmiņas
+        Cache::forget('problem_' . $id);
+    
+        // Atgriež lietotāju uz iepriekšējo lapu
+        return redirect()->back()->with('success', 'Atbildīgais atjaunināts!');
+    }
     // Atjaunina problēmas prioritāti.
     public function updatePriority(Request $request, $id)
     {
@@ -97,7 +115,7 @@ class ProblemController extends Controller
     {
         // Validē statusa ievadi
         $request->validate([
-            'status' => ['required', 'in:open,closed'],
+            'status' => ['required', 'in:open,procesa,closed'],
         ]);
 
         // Iegūst problēmu un atjaunina statusu.

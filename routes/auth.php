@@ -24,53 +24,54 @@ Route::middleware('guest')->group(function () {
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
-
 });
 
 Route::middleware('auth')->group(function () {
+    Route::delete('/problems/{id}', [ProblemController::class, 'destroy'])
+        ->name('problems.destroy');
+    Route::get('/problems/{id}', [ProblemController::class, 'show'])
+        ->name('problems.show');
+    Route::patch('/problems/{id}/editor', [ProblemController::class, 'updateEditor'])
+        ->name('problems.updateEditor');
+    Route::patch('/problems/{id}/priority', [ProblemController::class, 'updatePriority'])
+        ->name('problems.updatePriority');
+    Route::patch('/problems/{id}/status', [ProblemController::class, 'updateStatus'])
+        ->name('problems.updateStatus');
 
+        // Route::middleware(['auth', \App\Http\Middleware\EnsureUserIsAdmin::class])->group(function () {
+        //     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+        //     Route::post('register', [RegisteredUserController::class, 'store']);
+        //     Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+        //     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+        // });
+        // Route::middleware('admin')->group(function () {
+            // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+            Route::get('/dash/register', [RegisteredUserController::class, 'create'])->name('register');
+            Route::post('register', [RegisteredUserController::class, 'store']);
+            // Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+            // Route::post('/register', [RegisteredUserController::class, 'store']);
+            Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+            Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+        // });
 
-    Route::delete('/problems/{id}', [ProblemController::class, 'destroy'])->name('problems.destroy');
+        Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+            ->name('password.reset');
+        Route::post('reset-password', [NewPasswordController::class, 'store'])
+            ->name('password.store');
 
-    Route::get('/problems/{id}', [ProblemController::class, 'show'])->name('problems.show');
+        Route::get('verify-email', EmailVerificationPromptController::class)
+            ->name('verification.notice');
+        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
+        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
 
-    Route::patch('/problems/{id}/priority', [ProblemController::class, 'updatePriority'])->name('problems.updatePriority');
+        Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
+        Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::patch('/problems/{id}/status', [ProblemController::class, 'updateStatus'])->name('problems.updateStatus');
-    
-    Route::get('register', [RegisteredUserController::class, 'create'])
-    ->name('register');
-    
-    Route::post('register', [RegisteredUserController::class, 'store']);
-   
-    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
-    
-    Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-    ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-    ->name('password.store');
-    
-    Route::get('verify-email', EmailVerificationPromptController::class)
-        ->name('verification.notice');
-
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
-});
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    });

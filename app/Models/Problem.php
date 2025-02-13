@@ -28,4 +28,10 @@ class Problem extends Model
     public $sortable = ['id', 'nozare', 'virsraksts', 'apraksts', 'laiks', 'epasts', 'priority', 'status'];
     
     protected $stopOnFirstFailure = true;
+
+    public function editor()
+    {
+        return $this->belongsTo(User::class, 'editor');
+    }
+
 }

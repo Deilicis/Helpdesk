@@ -43,7 +43,7 @@
                 </a>
             @endif --}}
 
-            <button class="btn-primary">
+            <button class="btn btn-primary">
                 {{ __('Log in') }}
             </button>
         </div>

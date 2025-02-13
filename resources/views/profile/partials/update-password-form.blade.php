@@ -1,6 +1,6 @@
 <section>
     <header>
-        <h2>
+        <h2 class="btn-primary">
             {{ __('Nomainīt paroli') }}
         </h2>
     </header>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <button class="btn">{{ __('Saglabāt') }}</button>
+            <button class="btn btn-primary">{{ __('Saglabāt') }}</button>
 
             @if (session('status') === 'password-updated')
                 <p

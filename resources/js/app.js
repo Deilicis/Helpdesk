@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
+
 document.addEventListener('DOMContentLoaded', function () {
     // Visi DOM elementi.
     const problemRows = document.querySelectorAll('.problemTable-row');
@@ -9,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const backButton = document.getElementById('backButton');
     const problemTable = document.getElementById('problemTable');
     const problemDetails = document.getElementById('problemDetails');
+    const contentDiv = document.querySelector('.content');
+    const footer = document.querySelector('footer'); 
 
     let selectedProblemId = null; // Mainīgais, lai izsekotu izvēlētās problēmas ID
 
@@ -25,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // EventListener katrai tabulas rindai
         row.addEventListener('click', async function () {
             const problemId = this.getAttribute('data-id'); // iegūst problemId no rindas data-id atribūta
-            selectedProblemId = problemId; // Set the selected problem ID
-
-            problemTable.style.display = 'none';
+            selectedProblemId = problemId; 
+            footer.style.display = 'none';
+            contentDiv.style.display = 'none';
             problemDetails.style.display = 'block';
 
             detailsContent.innerHTML = '<p class="loading">Ielādējam detaļas...</p>';
@@ -59,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             <p><strong>Laiks:</strong> ${problem.laiks || '-'}</p>
                             <p><strong>Epasts:</strong> ${problem.epasts}</p>
                         </div>
+                        <div class="details-row">
+                            <p><strong>Rediģētājs:</strong> ${problem.editor ? problem.editor.name : 'N/A'}</p>
+                            <p><strong>Izveidošanas Laiks:</strong> ${problem.created_at}</p>
+                        </div>
                     </div>
                 `;
 
@@ -83,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // EventListeners atpakaļ pogai.
     backButton.addEventListener('click', function () {
         problemDetails.style.display = 'none';
-        problemTable.style.display = 'block';
+        contentDiv.style.display = 'block';
+        footer.style.display = 'block';
     });
 
     // EventListeners problēmas dzēšanas pogai.
