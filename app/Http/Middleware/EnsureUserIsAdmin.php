@@ -1,5 +1,4 @@
 <?php
-//filepath: app/http/middleware
 namespace App\Http\Middleware;
 
 use Closure;
